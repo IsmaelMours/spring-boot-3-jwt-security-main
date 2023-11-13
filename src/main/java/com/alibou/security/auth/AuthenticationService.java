@@ -19,8 +19,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Base64;
+import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -37,6 +42,7 @@ public class AuthenticationService {
         .lastname(request.getLastname())
         .email(request.getEmail())
         .password(passwordEncoder.encode(request.getPassword()))
+            .mobile(request.getMobile())
         .role(request.getRole())
         .build();
     var savedUser = repository.save(user);
@@ -66,6 +72,25 @@ public class AuthenticationService {
         .accessToken(jwtToken)
             .refreshToken(refreshToken)
         .build();
+  }
+
+  public List<User> allUsers() {
+    return (List<User>) repository.findAll();
+  }
+  public void saveUserImage(Integer userId, MultipartFile file) throws IOException {
+    User user = repository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+
+    String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
+    if (fileName.contains("..")) {
+      // Handle invalid file path
+    }
+
+    try {
+      user.setProfile(Base64.getEncoder().encodeToString(file.getBytes()));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    repository.save(user);
   }
 
   private void saveUserToken(User user, String jwtToken) {

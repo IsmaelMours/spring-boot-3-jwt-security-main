@@ -17,12 +17,12 @@ import static com.alibou.security.user.Permission.ADMIN_CREATE;
 import static com.alibou.security.user.Permission.ADMIN_DELETE;
 import static com.alibou.security.user.Permission.ADMIN_READ;
 import static com.alibou.security.user.Permission.ADMIN_UPDATE;
-import static com.alibou.security.user.Permission.MANAGER_CREATE;
-import static com.alibou.security.user.Permission.MANAGER_DELETE;
-import static com.alibou.security.user.Permission.MANAGER_READ;
-import static com.alibou.security.user.Permission.MANAGER_UPDATE;
+import static com.alibou.security.user.Permission.CONTENT_CREATOR_CREATE;
+import static com.alibou.security.user.Permission.CONTENT_CREATOR_DELETE;
+import static com.alibou.security.user.Permission.CONTENT_CREATOR_READ;
+import static com.alibou.security.user.Permission.CONTENT_CREATOR_UPDATE;
 import static com.alibou.security.user.Role.ADMIN;
-import static com.alibou.security.user.Role.MANAGER;
+import static com.alibou.security.user.Role.CONTENT_CREATOR;
 import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
@@ -57,11 +57,11 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(WHITE_LIST_URL)
                                 .permitAll()
-                                .requestMatchers("/api/v1/management/**").hasAnyRole(ADMIN.name(), MANAGER.name())
-                                .requestMatchers(GET, "/api/v1/management/**").hasAnyAuthority(ADMIN_READ.name(), MANAGER_READ.name())
-                                .requestMatchers(POST, "/api/v1/management/**").hasAnyAuthority(ADMIN_CREATE.name(), MANAGER_CREATE.name())
-                                .requestMatchers(PUT, "/api/v1/management/**").hasAnyAuthority(ADMIN_UPDATE.name(), MANAGER_UPDATE.name())
-                                .requestMatchers(DELETE, "/api/v1/management/**").hasAnyAuthority(ADMIN_DELETE.name(), MANAGER_DELETE.name())
+                                .requestMatchers("/api/v1/contentcreator/**").hasAnyRole(ADMIN.name(), CONTENT_CREATOR.name())
+                                .requestMatchers(GET, "/api/v1/contentcreator/**").hasAnyAuthority(ADMIN_READ.name(), CONTENT_CREATOR_READ.name())
+                                .requestMatchers(POST, "/api/v1/contentcreator/**").hasAnyAuthority(ADMIN_CREATE.name(), CONTENT_CREATOR_CREATE.name())
+                                .requestMatchers(PUT, "/api/v1/contentcreator/**").hasAnyAuthority(ADMIN_UPDATE.name(), CONTENT_CREATOR_UPDATE.name())
+                                .requestMatchers(DELETE, "/api/v1/contentcreator/**").hasAnyAuthority(ADMIN_DELETE.name(), CONTENT_CREATOR_DELETE.name())
                                 .anyRequest()
                                 .authenticated()
                 )
@@ -72,8 +72,7 @@ public class SecurityConfiguration {
                         logout.logoutUrl("/api/v1/auth/logout")
                                 .addLogoutHandler(logoutHandler)
                                 .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
-                )
-        ;
+                );
 
         return http.build();
     }

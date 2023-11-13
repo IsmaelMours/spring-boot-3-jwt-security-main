@@ -7,7 +7,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         format_sql: true
@@ -21,3 +21,11 @@ application:
       expiration: 86400000 # a day
       refresh-token:
         expiration: 604800000 # 7 days
+
+servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+
+banner:
+    charset: UTF-8

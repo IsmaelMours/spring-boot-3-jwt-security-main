@@ -11,14 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/management")
-@Tag(name = "Management")
-public class ManagementController {
-
+@RequestMapping("/api/v1/contentcreator")
+@Tag(name = "ContentCreator")
+public class ContentCreatorController {
 
     @Operation(
-            description = "Get endpoint for manager",
-            summary = "This is a summary for management get endpoint",
+            description = "Get endpoint for content creator",
+            summary = "This is a summary for content creator get endpoint",
             responses = {
                     @ApiResponse(
                             description = "Success",
@@ -29,22 +28,24 @@ public class ManagementController {
                             responseCode = "403"
                     )
             }
-
     )
     @GetMapping
     public String get() {
-        return "GET:: management controller";
+        return "GET:: content creator controller";
     }
+
     @PostMapping
     public String post() {
-        return "POST:: management controller";
+        return "POST:: content creator controller";
     }
+
     @PutMapping
     public String put() {
-        return "PUT:: management controller";
+        return "PUT:: content creator controller";
     }
+
     @DeleteMapping
     public String delete() {
-        return "DELETE:: management controller";
+        return "DELETE:: content creator controller";
     }
 }

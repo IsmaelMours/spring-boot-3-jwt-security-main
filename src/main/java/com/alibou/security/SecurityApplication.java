@@ -9,8 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
-import static com.alibou.security.user.Role.ADMIN;
-import static com.alibou.security.user.Role.MANAGER;
+import static com.alibou.security.user.Role.*;
 
 @SpringBootApplication
 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
@@ -26,22 +25,24 @@ public class SecurityApplication {
 	) {
 		return args -> {
 			var admin = RegisterRequest.builder()
-					.firstname("Admin")
-					.lastname("Admin")
-					.email("admin@mail.com")
+					.firstname("Ruben")
+					.lastname("Mm")
+					.email("RM23@mail.com")
 					.password("password")
+					.mobile("+27703882569")
 					.role(ADMIN)
 					.build();
 			System.out.println("Admin token: " + service.register(admin).getAccessToken());
 
-			var manager = RegisterRequest.builder()
-					.firstname("Admin")
-					.lastname("Admin")
-					.email("manager@mail.com")
+			var content_creator = RegisterRequest.builder()
+					.firstname("Shiz")
+					.lastname("Itu")
+					.email("SI20@mail.com")
 					.password("password")
-					.role(MANAGER)
+					.mobile("+27830053939")
+					.role(CONTENT_CREATOR)
 					.build();
-			System.out.println("Manager token: " + service.register(manager).getAccessToken());
+			System.out.println("Content Creator token: " + service.register(content_creator).getAccessToken());
 
 		};
 	}
