@@ -41,11 +41,11 @@ public class BlogServiceImpl implements BlogService {
     private UserRepository userRepository;
 
     @Override
-    public BlogDto createBlog(BlogDto blogDto, Integer catId, Integer userId )  {
+    public BlogDto createBlog(BlogDto blogDto, Integer catId, Long userId )  {
         Category category = this.categoryRepository.findById(catId)
                 .orElseThrow(() -> new ResourceNotFoundException("Category", "category id", catId));
         User user = this.userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User", "UserID", userId));
+                .orElseThrow(() -> new ResourceNotFoundException("User", "UserID", Math.toIntExact(userId)));
 
         Blog blog = this.modelMapper.map(blogDto, Blog.class);
         blog.setCreatedDate(new Date());
@@ -132,9 +132,9 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public List<BlogDto> getBlogByUser(Integer userId) {
+    public List<BlogDto> getBlogByUser(Long userId) {
         User user = this.userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("user","UserID",userId));
+                .orElseThrow(() -> new ResourceNotFoundException("user","UserID", Math.toIntExact(userId)));
 
         List<Blog> blogs = this.blogRepository.findAllByUser(user);
         List<BlogDto> blogDtos = blogs.stream().map((blog) -> this.modelMapper.map(blogs, BlogDto.class))

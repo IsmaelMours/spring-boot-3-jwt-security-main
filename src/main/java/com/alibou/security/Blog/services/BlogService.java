@@ -5,7 +5,7 @@ import com.alibou.security.Blog.payloads.*;
 import java.util.List;
 
 public interface BlogService {
-    BlogDto createBlog(BlogDto blogDto, Integer catId, Integer userId);
+    BlogDto createBlog(BlogDto blogDto, Integer catId, Long userId);
 
     BlogResponse getAllBlogs(Integer pageNumber, Integer pageSize, String sortBy, String sortDir);
 
@@ -15,7 +15,7 @@ public interface BlogService {
 
     void deleteBlog(Integer blogId);
 
-    List<BlogDto> getBlogByUser(Integer userId);
+    List<BlogDto> getBlogByUser(Long userId);
 
 
     List<BlogDto> getBlogByCategory(Integer catId);

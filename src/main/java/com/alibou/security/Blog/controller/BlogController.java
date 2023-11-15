@@ -26,7 +26,7 @@ public class BlogController {
 
     @PostMapping("/category/{catId}/user/{userId}")
     public ResponseEntity<String> createBlog(@RequestPart("data") BlogDto blogDto, @PathVariable Integer catId,
-                                             @PathVariable Integer userId, @RequestPart("img") MultipartFile file) {
+                                             @PathVariable Long userId, @RequestPart("img") MultipartFile file) {
         try{
             blogDto.setImg(file.getBytes());
         }catch(IOException e) {
@@ -62,7 +62,7 @@ public class BlogController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<BlogDto>> getPostByUser(@PathVariable Integer userId) {
+    public ResponseEntity<List<BlogDto>> getPostByUser(@PathVariable Long userId) {
         List<BlogDto> blogDtos = this.postService.getBlogByUser(userId);
         return new ResponseEntity<List<BlogDto>>(blogDtos, HttpStatus.OK);
     }
