@@ -1,9 +1,11 @@
 package com.alibou.security.user;
 
+import com.alibou.security.blog.model.Blog;
 import com.alibou.security.token.Token;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -19,12 +21,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "_user")
+@Table(name = "user")
 public class User implements UserDetails {
 
   @Id
   @GeneratedValue
-  private Integer id;
+  private Long id;
   private String firstname;
   private String lastname;
   private String email;
@@ -42,6 +44,9 @@ public class User implements UserDetails {
   @Lob
   @Column(name = "Profile picture", columnDefinition = "LONGBLOB")
   private String profile;
+
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+  private List<Blog> blogs = new ArrayList<>();
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return role.getAuthorities();

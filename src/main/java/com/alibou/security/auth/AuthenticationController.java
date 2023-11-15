@@ -39,7 +39,7 @@ public class AuthenticationController {
   }
   @PostMapping("upload/image/{userId}")
   public ResponseEntity<Void> saveUserImage(
-          @PathVariable Integer userId,
+          @PathVariable Long userId,
           @RequestParam("file") MultipartFile file
   ) throws IOException {
     service.saveUserImage(userId, file);

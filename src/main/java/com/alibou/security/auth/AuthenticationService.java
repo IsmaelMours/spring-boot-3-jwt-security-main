@@ -77,7 +77,7 @@ public class AuthenticationService {
   public List<User> allUsers() {
     return (List<User>) repository.findAll();
   }
-  public void saveUserImage(Integer userId, MultipartFile file) throws IOException {
+  public void saveUserImage(Long userId, MultipartFile file) throws IOException {
     User user = repository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
 
     String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
@@ -105,7 +105,7 @@ public class AuthenticationService {
   }
 
   private void revokeAllUserTokens(User user) {
-    var validUserTokens = tokenRepository.findAllValidTokenByUser(user.getId());
+    var validUserTokens = tokenRepository.findAllValidTokenByUser(Math.toIntExact(user.getId()));
     if (validUserTokens.isEmpty())
       return;
     validUserTokens.forEach(token -> {
