@@ -1,6 +1,7 @@
 package com.alibou.security.user;
 
-import com.alibou.security.blog.model.Blog;
+
+import com.alibou.security.Blog.model.Blog;
 import com.alibou.security.token.Token;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
